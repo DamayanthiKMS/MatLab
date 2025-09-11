@@ -1,0 +1,46 @@
+>> load fisheriris
+>> X= meas
+
+X =
+
+    5.1000    3.5000    1.4000    0.2000
+    4.9000    3.0000    1.4000    0.2000
+    4.7000    3.2000    1.3000    0.2000......
+	...
+---------------------------------------------------------------------
+>> y= species
+
+y =
+
+  150×1 cell array
+
+    'setosa'
+    'setosa'
+    'setosa'
+    'setosa'
+	...
+----------------------------------------------------------------------
+>> cv = cvpartition(y,'HoldOut',0.30);
+
+>> Xtrain =X(training(cv),:);
+>> ytrain = y(training(cv),:);
+>> Xtest = X(test(cv),:);
+>> ytest = y(test(cv),:);
+
+----------------------------------------------------------------------
+>> Mdl = fitcknn(Xtrain,ytrain,'NumNeighbors',3);
+>> ypred = predict(Mdl,Xtest);
+>> acc = sum(strcmp(ypred,ytest))/ numel(ytest);
+>> y= species
+
+y =
+
+  150×1 cell array
+
+    'setosa'
+    'setosa'
+    'setosa'......
+	..
+-----------------------------------------------------------------------
+>> fprintf('Accuracy:%.2f%%\n',acc*100);
+Accuracy:95.56%
